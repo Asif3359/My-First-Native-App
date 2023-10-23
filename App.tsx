@@ -1,36 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 
-import{
+import {
   View,
   SafeAreaView,
   Text,
+  TouchableOpacity,
+  Alert,
+  StyleSheet
 } from "react-native";
 type GreetingProps = {
   name: string;
+  // count: number;
 };
 
+const styles =StyleSheet.create({
+  screenSize:{
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  button:{
+    backgroundColor:"gray",
+    textAlign:"center",
+    marginTop:5,
+    padding:3,
+    width:150,
+  },
+  titles:{
+    backgroundColor:"green",
+    color:"white"
+    
+  }
+})
 
-const Person =(props:GreetingProps)=>{
 
-  return(
+const Person = (props: GreetingProps) => {
+
+  return (
     <Text>{props.name}</Text>
   )
 }
 
-const App =()=>{
-  return(
+const App = () => {
+
+  const [count, setCount] = useState(0);
+
+  const handlePress = () => {
+    setCount(count + 1);
+    Alert.alert(`you Click ${count+1} Time`);
+  }
+
+  return (
     <SafeAreaView>
-      <View>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
-        <Text>Hell World</Text>
+      <View style={styles.screenSize}>
+        <Text style={styles.titles}>Hell World</Text>
+  
         <Text>Hi My Name Is Asif</Text>
         <Text>Hi My Name Is Asif</Text>
 
@@ -41,6 +65,13 @@ const App =()=>{
 
         {/* Using Type script */}
         <Text>Hell <Person name='Asif Ahammed'></Person></Text>
+        <Text>Click Time: {count}</Text>
+        <TouchableOpacity>
+          <View>
+            <Text onPress={() => handlePress()} style={styles.button} >Click Me</Text>
+          </View>
+        </TouchableOpacity>
+
 
 
       </View>
