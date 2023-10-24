@@ -11,6 +11,7 @@ import {
 } from "react-native";
 type GreetingProps = {
   name: string;
+  input:string;
   // count: number;
 };
 
