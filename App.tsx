@@ -1,33 +1,36 @@
-import { View, Text, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 
 const App = () => {
 
-    const [input , setInput]=useState("");
-    const [result , setResult]=useState("");
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
 
-  const handleButton =(value)=>{
+  const handleButton = (value) => {
 
-    if(value=="ac")
-    {
+    if (value == "Ac") {
       setInput("");
       setResult("");
     }
-    else if(value=="=")
-    {
-      try{
+    else if (value == "x") {
+      const remaining = input.slice(0, input.length - 1);
+      setInput(remaining);
+    }
+    else if (value == "=") {
+      try {
         const calculateResult = eval(input);
         setResult(calculateResult.toString());
+        setInput(calculateResult.toString());
       }
-      catch(Error){
+      catch (Error) {
         setResult("Error");
       }
     }
-    else{
+    else {
       setInput((prevInput) => prevInput + value);
     }
   }
-  const buttons = [
+  const buttons = ["Ac", "(", ")", "x",
     "7", "8", "9", "/",
     "4", "5", "6", "*",
     "1", "2", "3", "-",
@@ -40,22 +43,20 @@ const App = () => {
         <View style={styles.container}>
           <View>
             <View>
-              <Text style={styles.header}>My Simple Calculator </Text>
+              <Text style={styles.header}>Amar Picchi Calculator </Text>
             </View>
             <View style={styles.outputContainer}>
               <Text style={styles.Output}>{input}</Text>
               <Text style={styles.Output}>{result}</Text>
             </View>
-            <View style={styles.AcButton}>
-              <View style={[styles.button]}>
-                <Text  onPress={()=>handleButton("ac")} style={styles.buttonText}>Ac</Text>
-              </View>
-            </View>
+
             <ScrollView contentContainerStyle={styles.buttonGrid}>
               {
                 buttons.map((button, index) => (
                   <View key={index} style={styles.button}>
-                    <Text onPress={()=>handleButton(button)} style={styles.buttonText}>{button}</Text>
+                    <TouchableOpacity>
+                      <Text onPress={() => handleButton(button)} style={styles.buttonText}>{button}</Text>
+                    </TouchableOpacity>
                   </View>
                 ))
               }
@@ -72,17 +73,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 50
   },
   header: {
-    fontSize: 24,
+    fontSize: 40,
     marginBottom: 10,
-    marginHorizontal:10
+    marginHorizontal: 10,
+    marginTop:15,
+    fontWeight:"bold"
   },
   Output: {
     fontSize: 40,
     marginBottom: 10,
-    marginHorizontal:10
+    marginHorizontal: 10
   },
   buttonGrid: {
     flexDirection: 'row', // Horizontal layout
@@ -94,32 +96,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'green',
+    borderColor: 'gray',
     margin: 5,
+    height:80,
+    width:80,
     borderRadius: 100,
-    shadowColor: "gray",
     shadowOffset: {
       width: 10,
       height: 10,
     },
     shadowOpacity: 100,
   },
+
   buttonText: {
     fontSize: 20,
-    padding:30,
-  },
-  AcButton: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    marginHorizontal: 25
+    padding: 30,
   },
   outputContainer: {
     borderColor: "gray",
     borderWidth: 2,
     borderRadius: 8,
     height: 200,
-    marginBottom: 50
+    marginBottom: 40,
+    marginHorizontal:10,
+    marginTop:15
   }
 });
 
