@@ -1,141 +1,126 @@
-import React, { useState } from "react";
-
-import {
-  View,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-  ScrollView
-} from "react-native";
-type GreetingProps = {
-  name: string;
-  input:string;
-  // count: number;
-};
-
-const styles = StyleSheet.create({
-  screenSize: {
-    overflow: "scroll",
-  },
-  inputArea: {
-    marginLeft: 10,
-  },
-  titles: {
-    backgroundColor: "green",
-    color: "white"
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  display: {
-    fontSize: 24,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  button: {
-    width: 75,
-    height: 75,
-    backgroundColor: 'lightblue',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 24,
-    margin: 5,
-  },
-
-})
-
-
-const Person = (props: GreetingProps) => {
-
-  return (
-    <Text>{props.name}</Text>
-  )
-}
+import { View, Text, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
 
 const App = () => {
 
-  const [count, setCount] = useState(0);
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState('');
+    const [input , setInput]=useState("");
+    const [result , setResult]=useState("");
 
-  const handleInput = (value) => {
-    if (value === '=') {
-      try {
-        const calculatedResult = eval(input);
-        setResult(calculatedResult.toString());
-      } catch (error) {
-        setResult('Error');
+  const handleButton =(value)=>{
+
+    if(value=="ac")
+    {
+      setInput("");
+      setResult("");
+    }
+    else if(value=="=")
+    {
+      try{
+        const calculateResult = eval(input);
+        setResult(calculateResult.toString());
       }
-    } else if (value === 'C') {
-      setInput('');
-      setResult('');
-    } else {
+      catch(Error){
+        setResult("Error");
+      }
+    }
+    else{
       setInput((prevInput) => prevInput + value);
     }
-  };
-
-  const buttons = [
-    '7', '8', '9', '/',
-    '4', '5', '6', '*',
-    '1', '2', '3', '-',
-    'C', '0', '=', '+',
-  ];
-
-  const handlePress = () => {
-    setCount(count + 1);
-    Alert.alert(`you Click ${count + 1} Time`);
   }
+  const buttons = [
+    "7", "8", "9", "/",
+    "4", "5", "6", "*",
+    "1", "2", "3", "-",
+    "0", ".", "=", "+"
+  ];
 
   return (
     <SafeAreaView>
-      <View style={styles.screenSize}>
-        <ScrollView>
-          <Text style={styles.titles}>Hell World</Text>
-
-          <Text>Hi My Name Is Asif</Text>
-          <Text>Hi My Name Is Asif</Text>
-
-          {/* Use Props Property */}
-          <Text>Hell <Person name='Asif'></Person></Text>
-          <Text>Hell <Person name='Atik'></Person></Text>
-          <Text>Hell <Person name='Alin'></Person></Text>
-
-          {/* Using Type script */}
-          <Text>Hell <Person name='Asif Ahammed'></Person></Text>
-          <Text>Click Time: {count}</Text>
-          <TouchableOpacity>
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
             <View>
-              <Text onPress={() => handlePress()} style={styles.button} >Click Me</Text>
-              {/* <Text onPress={() => handlePress()} style={styles.button} >Click Me</Text> */}
+              <Text style={styles.header}>My Simple Calculator </Text>
             </View>
-          </TouchableOpacity>
-          {/* Try to creat Native Calculator  */}
-
-          <View style={styles.container}>
-            <Text style={styles.display}>{input}</Text>
-            <Text style={styles.display}>{result}</Text>
-            <View style={styles.grid}>
-              {buttons.map((button) => (
-                <Text
-                  key={button}
-                  onPress={() => handleInput(button)}
-                  style={styles.button}
-                >
-                  {button}
-                </Text>
-              ))}
+            <View style={styles.outputContainer}>
+              <Text style={styles.Output}>{input}</Text>
+              <Text style={styles.Output}>{result}</Text>
             </View>
+            <View style={styles.AcButton}>
+              <View style={[styles.button]}>
+                <Text  onPress={()=>handleButton("ac")} style={styles.buttonText}>Ac</Text>
+              </View>
+            </View>
+            <ScrollView contentContainerStyle={styles.buttonGrid}>
+              {
+                buttons.map((button, index) => (
+                  <View key={index} style={styles.button}>
+                    <Text onPress={()=>handleButton(button)} style={styles.buttonText}>{button}</Text>
+                  </View>
+                ))
+              }
+            </ScrollView>
           </View>
-
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 10,
+    marginHorizontal:10
+  },
+  Output: {
+    fontSize: 40,
+    marginBottom: 10,
+    marginHorizontal:10
+  },
+  buttonGrid: {
+    flexDirection: 'row', // Horizontal layout
+    flexWrap: 'wrap', // Allow items to wrap to the next row
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'green',
+    margin: 5,
+    borderRadius: 100,
+    shadowColor: "gray",
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
+    shadowOpacity: 100,
+  },
+  buttonText: {
+    fontSize: 20,
+    padding:30,
+  },
+  AcButton: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginHorizontal: 25
+  },
+  outputContainer: {
+    borderColor: "gray",
+    borderWidth: 2,
+    borderRadius: 8,
+    height: 200,
+    marginBottom: 50
+  }
+});
+
 export default App;
