@@ -5,32 +5,44 @@ const App = () => {
 
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
+  const [preInput, setPreInput] = useState("");
+  const [isPreInput, setIsPreInput] = useState(false);
 
-  const handleButton = (value) => {
+  const handleButton = (value:string) => {
 
     if (value == "Ac") {
       setInput("");
       setResult("");
+      setPreInput("");
+      setIsPreInput(false)
     }
-    else if (value == "x") {
+    else if (value == "-x") {
       const remaining = input.slice(0, input.length - 1);
+      const remaining2 = preInput.slice(0, preInput.length - 1);
       setInput(remaining);
+      setPreInput(remaining2);
+      setIsPreInput(false);
     }
     else if (value == "=") {
       try {
         const calculateResult = eval(input);
+        // const calculateResult2 = eval(preInput);
+        setIsPreInput(true);
         setResult(calculateResult.toString());
         setInput(calculateResult.toString());
+        setPreInput(input);
       }
       catch (Error) {
         setResult("Error");
       }
     }
     else {
+      setIsPreInput(false);
+      setPreInput((prevInput) => prevInput + value);
       setInput((prevInput) => prevInput + value);
     }
   }
-  const buttons = ["Ac", "(", ")", "x",
+  const buttons = ["-x","(", ")", "Ac",
     "7", "8", "9", "/",
     "4", "5", "6", "*",
     "1", "2", "3", "-",
@@ -43,21 +55,24 @@ const App = () => {
         <View style={styles.container}>
           <View>
             <View>
-              <Text style={styles.header}>Amar Picchi Calculator </Text>
+              <Text style={styles.header}>Amar  Picchi Calculator </Text>
             </View>
             <View style={styles.outputContainer}>
-              <Text style={styles.Output}>{input}</Text>
-              <Text style={styles.Output}>{result}</Text>
+              <ScrollView>
+               {isPreInput? <Text style={styles.Output}>{preInput} </Text>:""}
+                <Text style={styles.Output}>{input} </Text>
+                {/* <Text style={styles.Output}>{result}</Text> */}
+              </ScrollView>
             </View>
 
             <ScrollView contentContainerStyle={styles.buttonGrid}>
               {
                 buttons.map((button, index) => (
-                  <View key={index} style={styles.button}>
-                    <TouchableOpacity>
-                      <Text onPress={() => handleButton(button)} style={styles.buttonText}>{button}</Text>
-                    </TouchableOpacity>
-                  </View>
+                  <TouchableOpacity key={index} onPress={() => handleButton(button)}  >
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText} >{button}</Text>
+                    </View>
+                  </TouchableOpacity>
                 ))
               }
             </ScrollView>
@@ -78,8 +93,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 10,
     marginHorizontal: 10,
-    marginTop:15,
-    fontWeight:"bold"
+    marginTop: 15,
+    fontWeight: "bold"
   },
   Output: {
     fontSize: 40,
@@ -92,14 +107,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#649ded',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'gray',
     margin: 5,
-    height:80,
-    width:80,
+    height: 80,
+    width: 80,
     borderRadius: 100,
     shadowOffset: {
       width: 10,
@@ -109,8 +123,8 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontSize: 20,
-    padding: 30,
+    fontSize: 40,
+    color:"white"
   },
   outputContainer: {
     borderColor: "gray",
@@ -118,8 +132,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 200,
     marginBottom: 40,
-    marginHorizontal:10,
-    marginTop:15
+    marginHorizontal: 10,
+    marginTop: 15
   }
 });
 
