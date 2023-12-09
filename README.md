@@ -1,10 +1,15 @@
-## <li> Using React Native Creat A simple Calculator . 
+## <li> Using React Native cli Creat A simple Calculator . 
 <li>Functionality I build In my Calculator </li>
 <li>Addition</li>
 <li>Multiplication</li>
 <li>Divition</li>
 <li>Substruction</li>
+
 <br>
+
+## Tools
+<li>React Native </li>
+<li>JavaScript </li>
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
 - [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
