@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 10,
     marginHorizontal: 10,
-    color:"white"
+    color:"black"
   },
   buttonGrid: {
     flexDirection: 'row', // Horizontal layout
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 15,
     color:"white",
-    backgroundColor:"gray"
+    backgroundColor:"#E8E9EB"
   }
 });
 
