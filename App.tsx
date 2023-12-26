@@ -55,7 +55,7 @@ const App = () => {
         <View style={styles.container}>
           <View>
             <View>
-              <Text style={styles.header}>Amar  Picchi Calculator </Text>
+              <Text style={styles.header}>Calculator </Text>
             </View>
             <View style={styles.outputContainer}>
               <ScrollView>
@@ -88,18 +88,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    color:'white',
+    backgroundColor:"white",
+    height:830
   },
   header: {
     fontSize: 40,
     marginBottom: 10,
     marginHorizontal: 10,
     marginTop: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color:"black"
   },
   Output: {
     fontSize: 40,
     marginBottom: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    color:"white"
   },
   buttonGrid: {
     flexDirection: 'row', // Horizontal layout
@@ -124,16 +129,18 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontSize: 40,
-    color:"white"
+    color:"black"
   },
   outputContainer: {
-    borderColor: "gray",
+    borderColor: "black",
     borderWidth: 2,
     borderRadius: 8,
     height: 200,
     marginBottom: 40,
     marginHorizontal: 10,
-    marginTop: 15
+    marginTop: 15,
+    color:"white",
+    backgroundColor:"gray"
   }
 });
 
